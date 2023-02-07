@@ -12,10 +12,18 @@ const Shopper = {
     // },
 
     async NoneVerifiedShoppers(_, {}) {
-      console.log("dsdfdsf")
       try {
-        const products = await models.OnbordShopper.findAll();
-        return products;
+        const vShopper = await models.OnbordShopper.findAll();
+        return vShopper;
+      } catch (error) {
+        return error.message;
+      }
+    },
+    async shoppers(_, {}) {
+      
+      try {
+        const shopper = await models.Shopper.findAll();
+        return shopper;
       } catch (error) {
         return error.message;
       }

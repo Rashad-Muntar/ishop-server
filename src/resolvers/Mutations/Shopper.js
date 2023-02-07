@@ -23,13 +23,6 @@ const Shopper = {
         vehicleLicense,
       }
     ) {
-      // if (email) {
-      //   email = email.trim().toLowerCase(email);
-      // }
-      // const validateEmail = validator.isEmail(email);
-      // if (!validateEmail) {
-      //   throw new AuthenticationError("Please enter a valid email");
-      // }
       try {
         const id = await processUpload(idCard);
         const driver = await processUpload(driverLicense);
@@ -58,17 +51,7 @@ const Shopper = {
       }
     },
 
-    async shopperSignup(
-      _,
-      {
-        firstName,
-        lastName,
-        email,
-        password,
-        phone
-      }
-    ) {
-      const hashedPassword = await bcrypt.hash(input.password, 10);
+    async shopperSignup(_, { firstName, lastName, email, password, phone }) {
       if (email) {
         email = email.trim().toLowerCase(email);
       }
@@ -76,19 +59,16 @@ const Shopper = {
       if (!validateEmail) {
         throw new AuthenticationError("Please enter a valid email");
       }
+      const hashedPassword = await bcrypt.hash(password, 10);
       try {
-      
-        await models.OnbordShopper.create({
+        const Shopper = await models.Shopper.create({
           firstName,
           lastName,
-          email: validateEmail,
+          email,
           password: hashedPassword,
-          phone
+          phone,
         });
-        return {
-          success: true,
-          message: "shopper details successfully submitted",
-        };
+        return Shopper;
       } catch (error) {
         return {
           success: false,

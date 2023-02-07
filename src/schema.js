@@ -75,6 +75,7 @@ const typeDefs = gql`
     me: Client!
     products: [Product!]
     NoneVerifiedShoppers: [Shopper!]
+    shoppers:[Ishopper!]
   }
 
   type Mutation {
