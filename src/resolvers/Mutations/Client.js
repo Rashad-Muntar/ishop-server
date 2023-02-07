@@ -48,7 +48,7 @@ const Client = {
       }
     },
 
-    SocialLogin: (root, { accessToken, service }, { req }) => {
+    async SocialLogin(root, { accessToken, service }, { req }){
         return new Promise((resolve, reject) => {
           passport.authenticate(service, { accessToken }, (err, user) => {
             if (err || !user) {
