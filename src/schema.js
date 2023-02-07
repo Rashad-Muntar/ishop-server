@@ -75,7 +75,7 @@ const typeDefs = gql`
     me: Client!
     products: [Product!]
     NoneVerifiedShoppers: [Shopper!]
-    shoppers:[Ishopper!]
+    shoppers: [Ishopper!]
   }
 
   type Mutation {
@@ -103,6 +103,7 @@ const typeDefs = gql`
       phone: String!
       location: String
     ): Ishopper!
+    shopperLogin(email: String!, password: String!): Ishopper!
 
     createProduct(image: String!, title: String!): Product
   }

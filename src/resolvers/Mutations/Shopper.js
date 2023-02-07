@@ -78,36 +78,33 @@ const Shopper = {
     },
 
     // ----------SHOPPER LOGIN ------------------
-    // async shopperLogin(_, { email, password }) {
-    //   if (email) {
-    //     // normalize email address
-    //     email = email.trim().toLowerCase();
-    //   }
-    //   const validateEmail = validator.isEmail(email);
-    //   if (!validateEmail) {
-    //     throw new AuthenticationError("Please enter a valid email");
-    //   }
-    //   try {
-    //     const user = await models.Shopper.findOne({ where: { email: email } });
-    //     if (!user) {
-    //       throw new AuthenticationError("User with this email is not found");
-    //     }
-    //     const valid = await bcrypt.compare(password, user.password);
-    //     if (!valid) {
-    //       throw new AuthenticationError("Password does not match");
-    //     }
-    //     return {
-    //       token: jwt.sign({ id: user.id }, config.JWT_SECRET),
-    //       success: true,
-    //       message: "Login succesfuly made",
-    //     };
-    //   } catch (error) {
-    //     return {
-    //       success: false,
-    //       message: error.message,
-    //     };
-    //   }
-    // },
+    async shopperLogin(_, { email, password }) {
+      if (email) {
+        // normalize email address
+        email = email.trim().toLowerCase();
+      }
+      const validateEmail = validator.isEmail(email);
+      if (!validateEmail) {
+        throw new AuthenticationError("Please enter a valid email");
+      }
+      try {
+        const shopper = await models.Shopper.findOne({ where: { email: email } });
+        if (!shopper) {
+          throw new AuthenticationError("User with this email is not found");
+        }
+        const valid = await bcrypt.compare(password, shopper.password);
+        if (!valid) {
+          throw new AuthenticationError("Password does not match");
+        }
+        console.log(shopper)
+        return shopper
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
+        };
+      }
+    },
   },
 
   Query: {},
