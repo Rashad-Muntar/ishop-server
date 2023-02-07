@@ -44,6 +44,7 @@ const typeDefs = gql`
 
     phoneVerification(phoneNumber: String!): Message!
     codeVerification(phoneNumber: String!, code: Int!): Client!
+    SocialLogin(accessToken: String!, service: String!): Client!
 
     createProduct(image: String!, title: String!): Product
   }
