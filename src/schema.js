@@ -102,6 +102,8 @@ const typeDefs = gql`
     NoneVerifiedShoppers: [Shopper!]
     shoppers: [Ishopper!]
     shopper(shopperId: ID!): Shopper!
+    category(categoryID: ID!): Category!
+    categories: [Category!]
   }
 
   type Mutation {
@@ -159,6 +161,10 @@ const typeDefs = gql`
       verified: Boolean!
     ): Vendor!
     storeLogin(email: String!, password: String!): Vendor!
+
+    updateCategory(id: ID!, title: String!, image: Upload!): Category!
+    deleteCategory(id: ID!): Message!
+    createCategory(title: String!, image: Upload!): Category!
   }
 `;
 

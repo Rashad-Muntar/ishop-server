@@ -3,7 +3,7 @@ const Client = require("./Client")
 const Shopper = require("./Shopper")
 const Vendor = require("./Vendor")
 const Store = require("./Store")
-
+const Category = require("./Category")
 
 const Mutation = {
   Mutation: {
@@ -11,7 +11,8 @@ const Mutation = {
     ...Client.Mutation,
     ...Shopper.Mutation,
     ...Vendor.Mutation,
-    ...Store.Mutation
+    ...Store.Mutation,
+    ...Category.Mutation
   },
 };
 
