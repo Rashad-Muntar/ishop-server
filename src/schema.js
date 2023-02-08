@@ -118,6 +118,19 @@ const typeDefs = gql`
     shopperLogin(email: String!, password: String!): Ishopper!
 
     createProduct(image: String!, title: String!): Product
+
+    createVendor(
+      firstName: String!
+      lastName: String!
+      email: String!
+      phone: String!
+      outletType: String!
+      branches: String!
+      storeName: String!
+      address: String!
+    ): Message
+    updateVendor(id: ID!, input: VendorInput): Message
+    deleteVendor(id: ID!): Message
   }
 `;
 
