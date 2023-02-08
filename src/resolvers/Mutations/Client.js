@@ -48,22 +48,22 @@ const Client = {
       }
     },
 
-    // SocialLogin: (root, { accessToken, service }, { req }) => {
-    //     return new Promise((resolve, reject) => {
-    //       passport.authenticate(service, { accessToken }, (err, user) => {
-    //         if (err || !user) {
-    //           return reject(err);
-    //         }
-    //         req.login(user, error => {
-    //           if (error) {
-    //             reject(error);
-    //           }
-    //           resolve(user);
-    //           console.log(user)
-    //         });
-    //       })(req);
-    //     });
-    //   },
+    async SocialLogin(root, { accessToken, service }, { req }){
+        return new Promise((resolve, reject) => {
+          passport.authenticate(service, { accessToken }, (err, user) => {
+            if (err || !user) {
+              return reject(err);
+            }
+            req.login(user, error => {
+              if (error) {
+                reject(error);
+              }
+              resolve(user);
+              console.log(user)
+            });
+          })(req);
+        });
+      },
   },
 };
 
