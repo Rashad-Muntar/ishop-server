@@ -30,6 +30,17 @@ const typeDefs = gql`
     vehicleLicense: Upload!
   }
 
+  input VendorInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    phone: String!
+    outletType: String!
+    branches: String!
+    storeName: String!
+    address: String!
+  }
+
   type Shopper {
     id: ID!
     firstName: String!
@@ -76,6 +87,7 @@ const typeDefs = gql`
     products: [Product!]
     NoneVerifiedShoppers: [Shopper!]
     shoppers: [Ishopper!]
+    shopper(shopperId: ID!): Shopper!
   }
 
   type Mutation {
