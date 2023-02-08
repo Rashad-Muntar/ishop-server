@@ -101,7 +101,7 @@ const Vendor = {
     },
     async deleteVendor(_, { id }) {
       try {
-        await models.Product.destroy({
+        await models.Vendor.destroy({
           where: { id: id },
         });
         return {
@@ -116,75 +116,6 @@ const Vendor = {
         };
       }
     },
-
-    // ------  STORE LOGIN ----------
-    // async storeLogin(_, { email, password }) {
-    //   if (email) {
-    //     email = email.trim().toLowerCase();
-    //   }
-    //   const validateEmail = validator.isEmail(email);
-    //   if (!validateEmail) {
-    //     throw new AuthenticationError("Please enter a valid email");
-    //   }
-    //   try {
-    //     const store = await models.Store.findOne({ where: { email: email } });
-    //     if (!store) {
-    //       throw new AuthenticationError("User with this email is not found");
-    //     }
-    //     const valid = await bcrypt.compare(password, store.password);
-    //     if (!valid) {
-    //       throw new AuthenticationError("Password does not match");
-    //     }
-
-    //     return {
-    //       token: jwt.sign({ id: store.id }, process.env.JWT_SECRET),
-    //       success: true,
-    //       message: "Login succesfuly made",
-    //     };
-    //   } catch (error) {
-    //     console.log(error);
-    //     return {
-    //       success: false,
-    //       message: error.message,
-    //     };
-    //   }
-    // },
-
-    // ------STORE SIGN UP -------------
-    // async createStore(_, { input }) {
-    //   const hashedPassword = await bcrypt.hash(input.password, 10);
-    //   if (input.email) {
-    //     input.email = input.email.trim().toLowerCase();
-    //   }
-    //   const validateEmail = validator.isEmail(input.email);
-    //   if (!validateEmail) {
-    //     throw new AuthenticationError("Please enter a valid email");
-    //   }
-    //   try {
-    //     const image = await processUpload(input.image);
-    //     const store = {
-    //       email: input.email,
-    //       password: hashedPassword,
-    //       storeName: input.storeName,
-    //       address: input.address,
-    //       phone: input.phone,
-    //       outletType: input.outletType,
-    //       branches: input.branches,
-    //       image: image.Location,
-    //       verified: input.verified
-    //     };
-    //     await models.Store.create(store);
-    //     return {
-    //       success: true,
-    //       message: "Store successfully created",
-    //     };
-    //   } catch (error) {
-    //     return {
-    //       success: false,
-    //       message: error.message,
-    //     };
-    //   }
-    // },
   },
 };
 

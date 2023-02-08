@@ -41,6 +41,20 @@ const typeDefs = gql`
     address: String!
   }
 
+  type Vendor {
+    id: ID!
+    email: String!
+    password: String!
+    storeName: String!
+    address: String!
+    phone: String!
+    outletType: String!
+    branches: String!
+    headerImg: String
+    logo: String
+    verified: Boolean!
+  }
+
   type Shopper {
     id: ID!
     firstName: String!
@@ -131,6 +145,20 @@ const typeDefs = gql`
     ): Message
     updateVendor(id: ID!, input: VendorInput): Message
     deleteVendor(id: ID!): Message
+
+    createStore(
+      email: String!
+      password: String!
+      storeName: String!
+      address: String!
+      phone: String!
+      outletType: String!
+      branches: String!
+      headerImg: Upload
+      logo: Upload
+      verified: Boolean!
+    ): Vendor!
+    storeLogin(email: String!, password: String!): Vendor!
   }
 `;
 
