@@ -4,10 +4,8 @@ const models = require("../../../sequelize/models");
 const Category = {
   Mutation: {
     async createCategory(_, { title, image }) {
-      // console.log(title, image);
       try {
         const img = await processUpload(image);
-        console.log(img)
         const newCategory = await models.Category.create({
           title,
           image: img.Location,
@@ -21,7 +19,7 @@ const Category = {
       }
     },
 
-    async updateCategory(_, { id, title, image}) {
+    async updateCategory(_, { id, title, image }) {
       try {
         const img = await processUpload(image);
         const category = await models.Category.findByPk(id);

@@ -3,7 +3,6 @@ const models = require("../../../sequelize/models");
 const Shopper = {
   Query: {
     async shopper(_, { shopperId }) {
-      // console.log(shopperId)
       try {
         const foundShopper = await models.Shopper.findOne({
           where: { id: shopperId },

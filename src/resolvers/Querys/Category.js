@@ -1,4 +1,5 @@
 const { Category } = require("../../../sequelize/models");
+const { Store } = require("../../../sequelize/models");
 
 const CategoryQuery = {
   Query: {
@@ -14,20 +15,17 @@ const CategoryQuery = {
       try {
         const foundCategory = await Category.findOne({
           where: { id: categoryID },
+          include: [
+            {
+              model: Store,
+              as: "stores",
+            },
+          ],
         });
         return foundCategory;
       } catch (error) {
         return error.message;
       }
-      //   const category = await Category.findAll({
-      //     include: [
-      //       {
-      //         model: models.Vendor,
-      //         where: { id: categoryId },
-      //       },
-      //     ],
-      //   });
-      //   return category;
     },
   },
 };
