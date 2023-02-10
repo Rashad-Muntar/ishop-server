@@ -38,7 +38,6 @@ const StoreMutation = {
         };
       }
     },
-
     async createStore(
       _,
       {
