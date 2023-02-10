@@ -73,15 +73,21 @@ const typeDefs = gql`
   }
 
   type Product {
-    image: String!
+    id: ID!
+    aisleId: String
     title: String!
+    detail: String!
+    brand: String!
+    price: String!
+    image: String
   }
 
   type ProductCategory {
     id: ID!
-    storeId:String!
+    storeId: String!
     title: String!
     image: String!
+    products: [Product!]
   }
 
   type Store {
@@ -96,7 +102,7 @@ const typeDefs = gql`
     headerImg: String
     logo: String
     verified: Boolean!
-    aisles:[ProductCategory!]
+    aisles: [ProductCategory!]
   }
 
   type Category {
@@ -114,7 +120,6 @@ const typeDefs = gql`
   type Query {
     users: [Client!]
     me: Client!
-    products: [Product!]
     NoneVerifiedShoppers: [Shopper!]
 
     shoppers: [Ishopper!]
@@ -127,6 +132,8 @@ const typeDefs = gql`
 
     ProductCategory(categoryId: ID!): ProductCategory!
     ProductCategories: [ProductCategory!]
+
+    products: [Product!]
   }
 
   type Mutation {
@@ -155,8 +162,6 @@ const typeDefs = gql`
       location: String
     ): Ishopper!
     shopperLogin(email: String!, password: String!): Ishopper!
-
-    createProduct(image: String!, title: String!): Product
 
     createVendor(
       firstName: String!
@@ -190,7 +195,30 @@ const typeDefs = gql`
     deleteCategory(id: ID!): Message!
     createCategory(title: String!, image: Upload!): Category!
 
-    createProductCategory(storeId:String!, title: String!, image: Upload!): ProductCategory!
+    createProductCategory(
+      storeId: String!
+      title: String!
+      image: Upload!
+    ): ProductCategory!
+
+    createProduct(
+      aisleId: String!
+      title: String!
+      detail: String!
+      brand: String!
+      price: String!
+      image: Upload!
+    ): Product!
+    updateProduct(
+      id: ID!
+      aisleId: String!
+      title: String!
+      detail: String!
+      brand: String!
+      price: String!
+      image: Upload!
+    ): Product!
+    deleteProduct(id: ID!): Message!
   }
 `;
 
