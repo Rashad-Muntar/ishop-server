@@ -1,12 +1,12 @@
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const models = require("../../../sequelize/models");
+const { Store } = require("../../../sequelize/models");
 const processUpload = require("../../../utils/upload");
 
 const { AuthenticationError, ForbiddenError } = require("apollo-server-lambda");
 
-const Store = {
+const StoreMutation = {
   Mutation: {
     async storeLogin(_, { email, password }) {
       if (email) {
@@ -17,7 +17,7 @@ const Store = {
         throw new AuthenticationError("Please enter a valid email");
       }
       try {
-        const store = await models.Store.findOne({ where: { email: email } });
+        const store = await Store.findOne({ where: { email: email } });
         if (!store) {
           throw new AuthenticationError("User with this email is not found");
         }
@@ -26,6 +26,10 @@ const Store = {
           throw new AuthenticationError("Password does not match");
         }
         return store
+        // return {
+        //   token: jwt.sign({ id: store.id }, process.env.JWT_SECRET),
+        //   store,
+        // };
       } catch (error) {
         console.log(error);
         return {
@@ -38,6 +42,7 @@ const Store = {
     async createStore(
       _,
       {
+        categoryId,
         email,
         password,
         storeName,
@@ -62,6 +67,7 @@ const Store = {
         const headerimage = await processUpload(headerImg);
         const logoImg = await processUpload(logo);
         const store = {
+          categoryId,
           email,
           password: hashedPassword,
           storeName,
@@ -73,8 +79,8 @@ const Store = {
           logo: logoImg.Location,
           verified,
         };
-        const newVendor = await models.Store.create(store);
-        return newVendor;
+        const newStore = await Store.create(store);
+        return newStore;
       } catch (error) {
         return {
           success: false,
@@ -85,4 +91,4 @@ const Store = {
   },
 };
 
-module.exports = Store;
+module.exports = StoreMutation;
