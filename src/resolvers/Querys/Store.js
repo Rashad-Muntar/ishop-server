@@ -19,7 +19,7 @@ const StoreQuery = {
     },
     store: async (_, { storeId }) => {
       try {
-        const foundCategory = await Store.findOne({
+        const foundStore = await Store.findOne({
           where: { id: storeId },
           include: [
             {
@@ -28,7 +28,7 @@ const StoreQuery = {
             },
           ],
         });
-        return foundCategory;
+        return foundStore;
       } catch (error) {
         return error.message;
       }
