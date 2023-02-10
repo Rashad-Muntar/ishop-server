@@ -77,9 +77,15 @@ const typeDefs = gql`
     title: String!
   }
 
+  type ProductCategory {
+    id: ID!
+    storeId:String!
+    title: String!
+    image: String!
+  }
+
   type Store {
     id: ID!
-    token: String!
     email: String!
     password: String!
     storeName: String
@@ -90,6 +96,7 @@ const typeDefs = gql`
     headerImg: String
     logo: String
     verified: Boolean!
+    aisles:[ProductCategory!]
   }
 
   type Category {
@@ -109,11 +116,17 @@ const typeDefs = gql`
     me: Client!
     products: [Product!]
     NoneVerifiedShoppers: [Shopper!]
+
     shoppers: [Ishopper!]
     shopper(shopperId: ID!): Shopper!
+
     category(categoryID: ID!): Category!
     categories: [Category!]
-    stores: [Vendor!]
+    stores: [Store!]
+    store(storeId: ID!): Store!
+
+    ProductCategory(categoryId: ID!): ProductCategory!
+    ProductCategories: [ProductCategory!]
   }
 
   type Mutation {
@@ -167,16 +180,17 @@ const typeDefs = gql`
       phone: String!
       outletType: String!
       branches: String!
-      headerImg: Upload
-      logo: Upload
+      headerImg: Upload!
+      logo: Upload!
       verified: Boolean!
     ): Store!
-
     storeLogin(email: String!, password: String!): Store!
 
     updateCategory(id: ID!, title: String!, image: Upload!): Category!
     deleteCategory(id: ID!): Message!
     createCategory(title: String!, image: Upload!): Category!
+
+    createProductCategory(storeId:String!, title: String!, image: Upload!): ProductCategory!
   }
 `;
 

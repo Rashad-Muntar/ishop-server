@@ -1,25 +1,38 @@
 const { Store } = require("../../../sequelize/models");
-
+const { Aisle } = require("../../../sequelize/models");
 const StoreQuery = {
   Query: {
     async stores(_, {}) {
       try {
-        const stores = await Store.findAll();
+        const stores = await Store.findAll({
+          include: [
+            {
+              model: Aisle,
+              as: "aisles",
+            },
+          ],
+        });
         return stores;
       } catch (error) {
         return "no data found";
       }
     },
-    // category: async (_, { categoryID }) => {
-    //   try {
-    //     const foundCategory = await Category.findOne({
-    //       where: { id: categoryID },
-    //     });
-    //     return foundCategory;
-    //   } catch (error) {
-    //     return error.message;
-    //   }
-    // },
+    store: async (_, { storeId }) => {
+      try {
+        const foundCategory = await Store.findOne({
+          where: { id: storeId },
+          include: [
+            {
+              model: Aisle,
+              as: "aisles",
+            },
+          ],
+        });
+        return foundCategory;
+      } catch (error) {
+        return error.message;
+      }
+    },
   },
 };
 

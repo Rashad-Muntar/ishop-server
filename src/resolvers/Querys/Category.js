@@ -5,7 +5,14 @@ const CategoryQuery = {
   Query: {
     async categories(_, {}) {
       try {
-        const categories = await Category.findAll();
+        const categories = await Category.findAll({
+          include: [
+            {
+              model: Store,
+              as: "stores",
+            },
+          ],
+        });
         return categories;
       } catch (error) {
         return "no data found";
