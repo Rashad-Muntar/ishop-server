@@ -1,0 +1,23 @@
+service: ishop-dev
+frameworkVersion: '3'
+
+
+plugins:
+  - serverless-offline
+  - serverless-express
+  
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  apiGateway:
+    shouldStartNameWithService: true
+
+functions:
+  api:
+    handler: server.handler
+    events:
+      - http:
+          path: graphql
+          method: ANY
+          # cors: true
