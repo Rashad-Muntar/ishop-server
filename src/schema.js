@@ -70,6 +70,7 @@ const typeDefs = gql`
     password: String!
     phone: String!
     location: String
+    token: String
   }
 
   type Product {

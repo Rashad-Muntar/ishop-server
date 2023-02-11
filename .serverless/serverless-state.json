@@ -179,7 +179,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/ishop-dev/dev/1676118307642-2023-02-11T12:25:07.642Z/ishop-dev.zip"
+                "S3Key": "serverless/ishop-dev/dev/1676144233732-2023-02-11T19:37:13.732Z/ishop-dev.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs18.x",
@@ -202,14 +202,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersion8bCAsjmp2VFlrxZmKcISVbyg4HPs1hrvBv78KLHqiE": {
+          "ApiLambdaVersiont7qx9thpFyAEsthr7uWNsnqVzCAQagulwGUsrTSvaQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "R639q0klgCKU9g9h7DY4s/zewqUET256KcaicftiPWQ="
+              "CodeSha256": "P+kwCHICuxsoOa6ehWc9M3UJaLAxQY6q4FMyVjDe+dU="
             }
           },
           "ApiGatewayRestApi": {
@@ -285,7 +285,7 @@
               "ApiLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1676118287493": {
+          "ApiGatewayDeployment1676144211111": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -347,7 +347,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersion8bCAsjmp2VFlrxZmKcISVbyg4HPs1hrvBv78KLHqiE"
+              "Ref": "ApiLambdaVersiont7qx9thpFyAEsthr7uWNsnqVzCAQagulwGUsrTSvaQ"
             },
             "Export": {
               "Name": "sls-ishop-dev-dev-ApiLambdaFunctionQualifiedArn"
@@ -488,7 +488,7 @@
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersion8bCAsjmp2VFlrxZmKcISVbyg4HPs1hrvBv78KLHqiE"
+        "versionLogicalId": "ApiLambdaVersiont7qx9thpFyAEsthr7uWNsnqVzCAQagulwGUsrTSvaQ"
       }
     },
     "configValidationMode": "warn",
@@ -511,7 +511,7 @@
     "artifact": "/home/rashad/ishop-backend/.serverless/ishop-dev.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/ishop-dev/dev/1676118307642-2023-02-11T12:25:07.642Z",
+    "artifactDirectoryName": "serverless/ishop-dev/dev/1676144233732-2023-02-11T19:37:13.732Z",
     "artifact": "ishop-dev.zip"
   }
 }

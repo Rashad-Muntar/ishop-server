@@ -59,7 +59,6 @@ const Client = {
                 reject(error);
               }
               resolve(user);
-              console.log(user)
             });
           })(req);
         });

@@ -96,8 +96,7 @@ const Shopper = {
         if (!valid) {
           throw new AuthenticationError("Password does not match");
         }
-        console.log(shopper)
-        return shopper
+        return {...shopper, token: await jwt.sign({ id: shopper._id }, process.env.JWT_SECRET)}
       } catch (error) {
         return {
           success: false,
