@@ -14,9 +14,9 @@ const typeDefs = gql`
   }
 
   type phoneUser {
-  token: String
-  phoneNumber: String
-}
+    token: String
+    phoneNumber: String
+  }
 
   input ProductInput {
     image: Upload!
@@ -143,26 +143,25 @@ const typeDefs = gql`
   }
 
   type newShoperPayload {
-  id: ID!
-  avatar: String
-  email: String
-  password: String
-  firstName: String
-  lastName: String
-  deliveryOption: String
-  location: String
-  latitude: Float
-  longitude: Float
-  phone: String!
-}
+    id: ID!
+    avatar: String
+    email: String
+    password: String
+    firstName: String
+    lastName: String
+    deliveryOption: String
+    location: String
+    latitude: Float
+    longitude: Float
+    phone: String!
+  }
 
   type newShopper {
-  shopper: newShoperPayload
-  token: String
-  success: Boolean
-  message: String
-}
-
+    shopper: newShoperPayload
+    token: String
+    success: Boolean
+    message: String
+  }
 
   type Mutation {
     phoneVerification(phoneNumber: String!): Message!
@@ -170,14 +169,17 @@ const typeDefs = gql`
     SocialLogin(accessToken: String!, service: String!): Client!
 
     shopperSignup(
-      avatar: String
-      firstName: String!
-      lastName: String!
+      avatar: String!
       email: String!
       password: String!
+      firstName: String!
+      lastName: String!
+      deliveryOption: String!
+      location: String!
+      latitude: Float
+      longitude: Float
       phone: String!
-      location: String
-    ): Ishopper!
+    ): newShopper!
     shopperLogin(email: String!, password: String!): newShopper!
 
     createVendor(
