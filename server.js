@@ -68,7 +68,7 @@ exports.handler = server.createHandler({
       origin: "*",
       credentials: false,
     },
-    bodyParserConfig: { limit: "50mb" },
+    timeout: 60 
   },
 });
 

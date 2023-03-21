@@ -6,11 +6,12 @@ const Category = {
     async createCategory(_, { title, image }) {
       try {
         const img = await processUpload(image);
-        const newCategory = await models.Category.create({
-          title,
-          image: img.Location,
-        });
-        return newCategory;
+        console.log(img)
+          const newCategory = await models.Category.create({
+            title,
+            image: img.Location,
+          });
+          return newCategory;
       } catch (error) {
         return {
           success: false,

@@ -11,13 +11,15 @@ provider:
   runtime: nodejs18.x
   region: us-east-1
   apiGateway:
-    shouldStartNameWithService: true
+        binaryMediaTypes:
+            - '*/*'
 
 functions:
   api:
     handler: server.handler
+    # timeout: 60
     events:
       - http:
           path: graphql
           method: ANY
-          # cors: true
+          cors: true

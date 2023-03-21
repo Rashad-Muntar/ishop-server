@@ -13,6 +13,11 @@ const typeDefs = gql`
     location: String
   }
 
+  type phoneUser {
+  token: String
+  phoneNumber: String
+}
+
   input ProductInput {
     image: Upload!
     title: String!
@@ -109,7 +114,7 @@ const typeDefs = gql`
   type Category {
     id: ID!
     title: String!
-    image: String!
+    image: String
     stores: [Store]
   }
 
@@ -137,24 +142,35 @@ const typeDefs = gql`
     products: [Product!]
   }
 
+  type newShoperPayload {
+  id: ID!
+  avatar: String
+  email: String
+  password: String
+  firstName: String
+  lastName: String
+  deliveryOption: String
+  location: String
+  latitude: Float
+  longitude: Float
+  phone: String!
+}
+
+  type newShopper {
+  shopper: newShoperPayload
+  token: String
+  success: Boolean
+  message: String
+}
+
+
   type Mutation {
     phoneVerification(phoneNumber: String!): Message!
-    codeVerification(phoneNumber: String!, code: Int!): Client!
+    codeVerification(phoneNumber: String!, code: Int!): phoneUser!
     SocialLogin(accessToken: String!, service: String!): Client!
 
-    shopperDetailSubmit(
-      firstName: String!
-      lastName: String!
-      email: String!
-      phone: String!
-      location: String!
-      vehicleType: String!
-      idCard: Upload!
-      driverLicense: Upload!
-      vehicleLicense: Upload!
-    ): Message!
     shopperSignup(
-      avatar: Upload
+      avatar: String
       firstName: String!
       lastName: String!
       email: String!
@@ -162,7 +178,7 @@ const typeDefs = gql`
       phone: String!
       location: String
     ): Ishopper!
-    shopperLogin(email: String!, password: String!): Ishopper!
+    shopperLogin(email: String!, password: String!): newShopper!
 
     createVendor(
       firstName: String!

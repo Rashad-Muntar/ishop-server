@@ -36,9 +36,13 @@ const Client = {
           code: code,
         });
 
+        let token = jwt.sign(
+          { id: phoneNumber },
+          process.env.JWT_SECRET
+        );
         return {
-          token: jwt.sign({ id: phoneNumber }, process.env.JWT_SECRET),
-          phone: phoneNumber
+          token: token,
+          phoneNumber:phoneNumber
         };
       } catch (error) {
         return {

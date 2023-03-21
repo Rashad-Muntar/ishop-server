@@ -9,47 +9,47 @@ const { AuthenticationError, ForbiddenError } = require("apollo-server-lambda");
 
 const Shopper = {
   Mutation: {
-    async shopperDetailSubmit(
-      _,
-      {
-        firstName,
-        lastName,
-        email,
-        phone,
-        location,
-        vehicleType,
-        idCard,
-        driverLicense,
-        vehicleLicense,
-      }
-    ) {
-      try {
-        const id = await processUpload(idCard);
-        const driver = await processUpload(driverLicense);
-        const vehicle = await processUpload(vehicleLicense);
+    // async shopperDetailSubmit(
+    //   _,
+    //   {
+    //     firstName,
+    //     lastName,
+    //     email,
+    //     phone,
+    //     location,
+    //     vehicleType,
+    //     idCard,
+    //     driverLicense,
+    //     vehicleLicense,
+    //   }
+    // ) {
+    //   try {
+    //     const id = await processUpload(idCard);
+    //     const driver = await processUpload(driverLicense);
+    //     const vehicle = await processUpload(vehicleLicense);
 
-        await models.OnbordShopper.create({
-          firstName,
-          lastName,
-          email,
-          location,
-          phone,
-          vehicleType,
-          idCard: id.Location,
-          driverLicense: driver.Location,
-          vehicleLicense: vehicle.Location,
-        });
-        return {
-          success: true,
-          message: "shopper details successfully submitted",
-        };
-      } catch (error) {
-        return {
-          success: false,
-          message: error.message,
-        };
-      }
-    },
+    //     await models.OnbordShopper.create({
+    //       firstName,
+    //       lastName,
+    //       email,
+    //       location,
+    //       phone,
+    //       vehicleType,
+    //       idCard: id.Location,
+    //       driverLicense: driver.Location,
+    //       vehicleLicense: vehicle.Location,
+    //     });
+    //     return {
+    //       success: true,
+    //       message: "shopper details successfully submitted",
+    //     };
+    //   } catch (error) {
+    //     return {
+    //       success: false,
+    //       message: error.message,
+    //     };
+    //   }
+    // },
 
     async shopperSignup(_, { firstName, lastName, email, password, phone }) {
       if (email) {
@@ -96,7 +96,7 @@ const Shopper = {
         if (!valid) {
           throw new AuthenticationError("Password does not match");
         }
-        return {...shopper, token: await jwt.sign({ id: shopper._id }, process.env.JWT_SECRET)}
+        return {...shopper, token: jwt.sign({ id: shopper._id }, process.env.JWT_SECRET)}
       } catch (error) {
         return {
           success: false,

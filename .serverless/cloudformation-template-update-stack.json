@@ -161,13 +161,13 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/ishop-dev/dev/1676144233732-2023-02-11T19:37:13.732Z/ishop-dev.zip"
+          "S3Key": "serverless/ishop-dev/dev/1676154944717-2023-02-11T22:35:44.717Z/ishop-dev.zip"
         },
         "Handler": "server.handler",
         "Runtime": "nodejs18.x",
         "FunctionName": "ishop-dev-dev-api",
         "MemorySize": 1024,
-        "Timeout": 6,
+        "Timeout": 60,
         "Environment": {
           "Variables": {
             "SERVERLESS_EXPRESS_PLATFORM": "aws"
@@ -184,20 +184,20 @@
         "ApiLogGroup"
       ]
     },
-    "ApiLambdaVersiont7qx9thpFyAEsthr7uWNsnqVzCAQagulwGUsrTSvaQ": {
+    "ApiLambdaVersionCkQ2rG8lmaeBGeFn3OFG8w2teyldQAidkdCLj6ZZjA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "P+kwCHICuxsoOa6ehWc9M3UJaLAxQY6q4FMyVjDe+dU="
+        "CodeSha256": "L+Wiz7Vnk0mVXmKCxdZGcTxTMJjTHjQv6KyJKN6VRsg="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "ishop-dev-dev",
+        "Name": "dev-ishop-dev",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -267,7 +267,7 @@
         "ApiLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1676144211111": {
+    "ApiGatewayDeployment1676154922398": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -329,7 +329,7 @@
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersiont7qx9thpFyAEsthr7uWNsnqVzCAQagulwGUsrTSvaQ"
+        "Ref": "ApiLambdaVersionCkQ2rG8lmaeBGeFn3OFG8w2teyldQAidkdCLj6ZZjA"
       },
       "Export": {
         "Name": "sls-ishop-dev-dev-ApiLambdaFunctionQualifiedArn"
