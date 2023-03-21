@@ -210,9 +210,10 @@ const typeDefs = gql`
     ): Store!
     storeLogin(email: String!, password: String!): Store!
 
-    updateCategory(id: ID!, title: String!, image: Upload!): Category!
+    updateCategory(id: ID!, title: String!, image: String!): Category!
     deleteCategory(id: ID!): Message!
-    createCategory(title: String!, image: Upload!): Category!
+
+    createCategory(title: String!, image: String!): Category!
 
     createProductCategory(
       storeId: String!

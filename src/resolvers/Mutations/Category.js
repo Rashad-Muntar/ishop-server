@@ -5,13 +5,11 @@ const Category = {
   Mutation: {
     async createCategory(_, { title, image }) {
       try {
-        const img = await processUpload(image);
-        console.log(img)
-          const newCategory = await models.Category.create({
-            title,
-            image: img.Location,
-          });
-          return newCategory;
+        const newCategory = await models.Category.create({
+          title,
+          image,
+        });
+        return newCategory;
       } catch (error) {
         return {
           success: false,
@@ -22,11 +20,10 @@ const Category = {
 
     async updateCategory(_, { id, title, image }) {
       try {
-        const img = await processUpload(image);
         const category = await models.Category.findByPk(id);
         const updateCat = await category.update({
           title,
-          image: img.Location,
+          image,
         });
         return updateCat;
       } catch (error) {

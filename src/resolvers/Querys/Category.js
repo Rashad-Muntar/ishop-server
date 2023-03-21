@@ -6,13 +6,14 @@ const CategoryQuery = {
     async categories(_, {}) {
       try {
         const categories = await Category.findAll({
-          include: [
-            {
-              model: Store,
-              as: "stores",
-            },
-          ],
+          // include: [
+          //   {
+          //     model: Store,
+          //     as: "stores",
+          //   },
+          // ],
         });
+        console.log(categories)
         return categories;
       } catch (error) {
         return "no data found";
