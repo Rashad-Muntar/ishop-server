@@ -31,7 +31,6 @@ const Client = {
     },
 
     async codeVerification(_, { phoneNumber, code }) {
-      let newClient = null;
       try {
         await client.verify
           .services(process.env.SERVICE_SID)
@@ -40,27 +39,18 @@ const Client = {
             code: code,
           });
 
-        const foundClient = await models.Client.findOne({
+        let foundClient = await models.Client.findOne({
           where: { phone: phoneNumber },
         });
-        console.log(foundClient)
-        // if (!newClient) {
-        //   newClient = await Client.create({
-        //     phone: phoneNumber,
-        //   });
-        // }
-        // let token = jwt.sign({ id: phoneNumber }, process.env.JWT_SECRET);
-        // console.log(newClient)
-        // return {
-        //   username: newClient.username,
-        //   email: newClient.email,
-        //   phone: phoneNumber,
-        //   token: token,
-        //   location: newClient.location,
-        // };
+        if (!foundClient) {
+          foundClient = await models.Client.create({ phone: phoneNumber });
+        }
+
+        let token = jwt.sign({ id: phoneNumber }, process.env.JWT_SECRET);
         return {
-          success: true,
-          message: "Verification code sent",
+          client: foundClient,
+          token: token,
+          message: "Client successfully logged in",
         };
       } catch (error) {
         return {

@@ -4,18 +4,23 @@ const typeDefs = gql`
   scalar Upload
   scalar DateTime
 
-  type Client {
+  type clientPaylod {
     id: ID!
     username: String
     email: String
     password: String
     phone: String!
-    token: String
     location: String
     createdAt: DateTime!
     updatedAt: DateTime!
   }
 
+  type Client {
+    client: clientPaylod
+    token: String
+    success: Boolean
+    message: String
+  }
   type phoneUser {
     token: String
     phoneNumber: String
@@ -208,7 +213,7 @@ const typeDefs = gql`
 
   type Mutation {
     phoneVerification(phoneNumber: String!): Message!
-    codeVerification(phoneNumber: String!, code: Int!): Message!
+    codeVerification(phoneNumber: String!, code: Int!): Client!
     SocialLogin(accessToken: String!, service: String!): Client!
 
     createPaymentIntent(amount: Float!): PaymentIntention!
