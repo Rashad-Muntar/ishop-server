@@ -18,10 +18,10 @@ const ProductCategory = {
         return "no data found";
       }
     },
-    ProductCategory: async (_, { categoryID }) => {
+    ProductCategory: async (_, { categoryId }) => {
       try {
         const foundCategory = await Aisle.findOne({
-          where: { id: categoryID },
+          where: { id: categoryId },
           include: [
             {
               model: Product,

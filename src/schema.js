@@ -2,15 +2,18 @@ const { gql } = require("apollo-server-lambda");
 
 const typeDefs = gql`
   scalar Upload
+  scalar DateTime
 
   type Client {
     id: ID!
-    name: String
+    username: String
     email: String
     password: String
     phone: String!
     token: String
     location: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type phoneUser {
@@ -21,6 +24,22 @@ const typeDefs = gql`
   input ProductInput {
     image: Upload!
     title: String!
+  }
+
+  type Order {
+    id: ID!
+    startTime: DateTime!
+    endTime: DateTime!
+    code: Int
+    isCancel: Boolean!
+    isComplete: Boolean!
+    onGoing: Boolean!
+    shopperId: String
+    storeId: String!
+    clientId: String!
+    products: [Product!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   input ShopperInput {
@@ -64,6 +83,8 @@ const typeDefs = gql`
     idCard: String!
     driverLicense: String!
     vehicleLicense: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type Ishopper {
@@ -84,8 +105,10 @@ const typeDefs = gql`
     title: String!
     detail: String!
     brand: String!
-    price: String!
+    price: Float!
     image: String
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type ProductCategory {
@@ -94,12 +117,14 @@ const typeDefs = gql`
     title: String!
     image: String!
     products: [Product!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
-  type Store {
+  type newStorePayload {
     id: ID!
     email: String!
-    password: String!
+    password: String
     storeName: String
     address: String!
     phone: String!
@@ -109,6 +134,22 @@ const typeDefs = gql`
     logo: String
     verified: Boolean!
     aisles: [ProductCategory!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
+  }
+
+  type Store {
+    Store: newStorePayload
+    token: String
+    success: Boolean
+    message: String
+  }
+
+  type PaymentIntention {
+    paymentIntent: String!
+    ephemeralKey: String!
+    customer: String!
+    publishableKey: String!
   }
 
   type Category {
@@ -116,6 +157,8 @@ const typeDefs = gql`
     title: String!
     image: String
     stores: [Store]
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type Message {
@@ -128,10 +171,10 @@ const typeDefs = gql`
     me: Client!
     NoneVerifiedShoppers: [Shopper!]
 
-    shoppers: [Ishopper!]
+    shoppers: [newShoperPayload!]
     shopper(shopperId: ID!): Shopper!
 
-    category(categoryID: ID!): Category!
+    category(categoryId: ID!): Category!
     categories: [Category!]
     stores: [Store!]
     store(storeId: ID!): Store!
@@ -165,8 +208,10 @@ const typeDefs = gql`
 
   type Mutation {
     phoneVerification(phoneNumber: String!): Message!
-    codeVerification(phoneNumber: String!, code: Int!): phoneUser!
+    codeVerification(phoneNumber: String!, code: Int!): Message!
     SocialLogin(accessToken: String!, service: String!): Client!
+
+    createPaymentIntent(amount: Float!): PaymentIntention!
 
     shopperSignup(
       avatar: String!
@@ -204,30 +249,48 @@ const typeDefs = gql`
       phone: String!
       outletType: String!
       branches: String!
-      headerImg: Upload!
-      logo: Upload!
+      headerImg: String!
+      logo: String!
       verified: Boolean!
     ): Store!
+    updateStore(
+      id: ID!
+      email: String!
+      storeName: String!
+      address: String!
+      phone: String!
+      outletType: String!
+      branches: String!
+      headerImg: String!
+      logo: String!
+      verified: Boolean!
+    ): Store!
+    deleteStore(id: ID!): Message!
     storeLogin(email: String!, password: String!): Store!
 
     updateCategory(id: ID!, title: String!, image: String!): Category!
     deleteCategory(id: ID!): Message!
-
     createCategory(title: String!, image: String!): Category!
 
     createProductCategory(
       storeId: String!
       title: String!
-      image: Upload!
+      image: String!
     ): ProductCategory!
+    updateProductCategory(
+      id: String!
+      title: String!
+      image: String!
+    ): ProductCategory!
+    deleteProductCategory(id: String!): Message!
 
     createProduct(
       aisleId: String!
       title: String!
       detail: String!
       brand: String!
-      price: String!
-      image: Upload!
+      price: Float!
+      image: String!
     ): Product!
     updateProduct(
       id: ID!
@@ -235,8 +298,8 @@ const typeDefs = gql`
       title: String!
       detail: String!
       brand: String!
-      price: String!
-      image: Upload!
+      price: Float!
+      image: String!
     ): Product!
     deleteProduct(id: ID!): Message!
   }

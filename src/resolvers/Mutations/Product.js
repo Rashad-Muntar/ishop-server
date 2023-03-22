@@ -1,18 +1,16 @@
 const { Product } = require("../../../sequelize/models");
-const processUpload = require("../../../utils/upload");
 
 const ProductMutation = {
   Mutation: {
     async createProduct(_, { aisleId, title, detail, brand, price, image }) {
       try {
-        const img = await processUpload(image);
         const newProduct = await Product.create({
           aisleId,
           title,
           detail,
           brand,
           price,
-          image: img.Location,
+          image
         });
         return newProduct;
       } catch (error) {
@@ -25,17 +23,16 @@ const ProductMutation = {
     },
     async updateProduct(_, {id, aisleId, title, detail, brand, price, image }) {
       try {
-        const img = await processUpload(image);
         const product = await Product.findByPk(id);
-        const updateProd = await product.update({
+        const updatedProd = await product.update({
           aisleId,
           title,
           detail,
           brand,
           price,
-          image: img.Location,
+          image,
         });
-        return updateProd;
+        return updatedProd;
       } catch (error) {
         return {
           success: false,

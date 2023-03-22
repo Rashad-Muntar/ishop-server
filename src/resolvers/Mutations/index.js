@@ -5,6 +5,7 @@ const Vendor = require("./Vendor");
 const Store = require("./Store");
 const Category = require("./Category");
 const ProductCategory = require("./ProductCategory")
+const PaymentIntention =  require("./PaymentIntent");
 
 const Mutation = {
   Mutation: {
@@ -14,7 +15,8 @@ const Mutation = {
     ...Vendor.Mutation,
     ...Store.Mutation,
     ...Category.Mutation,
-    ...ProductCategory.Mutation
+    ...ProductCategory.Mutation,
+    ...PaymentIntention.Mutation
   },
 };
 

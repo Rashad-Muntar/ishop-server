@@ -2,7 +2,7 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Store } = require("../../../sequelize/models");
-const processUpload = require("../../../utils/upload");
+
 
 const { AuthenticationError, ForbiddenError } = require("apollo-server-lambda");
 
@@ -25,19 +25,21 @@ const StoreMutation = {
         if (!valid) {
           throw new AuthenticationError("Password does not match");
         }
-        return store
-        // return {
-        //   token: jwt.sign({ id: store.id }, process.env.JWT_SECRET),
-        //   store,
-        // };
+        let token = jwt.sign({ id: store._id }, process.env.JWT_SECRET);
+        return {
+          Store: store,
+          token,
+          success: true,
+          message: "Store succesfully logged in"
+        };
       } catch (error) {
-        console.log(error);
         return {
           success: false,
           message: error.message,
         };
       }
     },
+
     async createStore(
       _,
       {
@@ -63,8 +65,6 @@ const StoreMutation = {
         throw new AuthenticationError("Please enter a valid email");
       }
       try {
-        const headerimage = await processUpload(headerImg);
-        const logoImg = await processUpload(logo);
         const store = {
           categoryId,
           email,
@@ -74,12 +74,82 @@ const StoreMutation = {
           phone,
           outletType,
           branches,
-          headerImg: headerimage.Location,
-          logo: logoImg.Location,
+          headerImg,
+          logo,
           verified,
         };
         const newStore = await Store.create(store);
-        return newStore;
+        let token = jwt.sign({ id: newStore._id }, process.env.JWT_SECRET);
+        return {
+          Store: newStore,
+          token,
+          success: true,
+          message: "Store succesfully created"
+        };
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
+        };
+      }
+    },
+    async updateStore(
+      _,
+      {
+        id,
+        email,
+        storeName,
+        address,
+        phone,
+        outletType,
+        branches,
+        headerImg,
+        logo,
+        verified,
+      }
+    ) {
+      if (email) {
+        email = email.trim().toLowerCase();
+      }
+      const validateEmail = validator.isEmail(email);
+      if (!validateEmail) {
+        throw new AuthenticationError("Please enter a valid email");
+      }
+      try {
+        const foundStore = await Store.findByPk(id);
+        const newStore = await foundStore.update({
+          email,
+          storeName,
+          address,
+          phone,
+          outletType,
+          branches,
+          headerImg,
+          logo,
+          verified,
+        });
+        return {
+          Store: newStore,
+          success: true,
+          message: "Store succesfully updated"
+        };
+      } catch (error) {
+        return {
+          success: false,
+          message: error.message,
+        };
+      }
+    },
+
+    async deleteStore(_, { id }) {
+      try {
+        await Store.destroy({
+          where: { id: id },
+        });
+        return {
+          message: "Store deleted",
+          success: true,
+        };
       } catch (error) {
         return {
           success: false,

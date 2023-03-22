@@ -1,4 +1,3 @@
-const processUpload = require("../../../utils/upload");
 const models = require("../../../sequelize/models");
 
 const Category = {
