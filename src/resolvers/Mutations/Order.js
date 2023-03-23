@@ -1,4 +1,8 @@
 const models = require("../../../sequelize/models");
+const { PubSub } = require('graphql-subscriptions');
+const { withFilter } = require('graphql-subscriptions');
+
+const pubsub = new PubSub();
 
 const OrderMutation = {
   Mutation: {
@@ -11,10 +15,10 @@ const OrderMutation = {
           clientId,
         });
         return {
-            order: newOrder,
-            success: true,
-            message: "Order succesfully created"
-          };
+          order: newOrder,
+          success: true,
+          message: "Order succesfully created",
+        };
       } catch (error) {
         return {
           success: false,
@@ -22,10 +26,7 @@ const OrderMutation = {
         };
       }
     },
-    async updateOrder(
-      _,
-      { id, isCancel, isComplete, onGoing, shopperId}
-    ) {
+    async updateOrder(_, { id, isCancel, isComplete, onGoing, shopperId }) {
       try {
         const order = await models.Order.findByPk(id);
         const updatedOrder = await order.update({
@@ -34,11 +35,16 @@ const OrderMutation = {
           onGoing,
           shopperId,
         });
-        return {
+        const orderResponse = {
           order: updatedOrder,
           success: true,
-          message: "Order succesfully updated"
+          message: "Order succesfully updated",
         };
+        pubsub.publish("ORDER_UPDATED", {
+          onUpdateOrder: orderResponse,
+          shopperId: shopperId, // <-- add shopperId argument
+        });
+        return orderResponse;
       } catch (error) {
         return {
           success: false,
@@ -63,6 +69,17 @@ const OrderMutation = {
       }
     },
   },
+  Subscription: {
+    onUpdateOrder: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator("ORDER_UPDATED"),
+        (payload, args) => {
+          // console.log(payload.onUpdateOrder.order.dataValues.shopperId)
+          return payload.onUpdateOrder.order.dataValues.shopperId === args.shopperId;
+        }
+      ),
+    },
+  }
 };
 
 module.exports = OrderMutation;

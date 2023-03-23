@@ -7,6 +7,7 @@ const Category = require("./Category");
 const ProductCategory = require("./ProductCategory");
 const PaymentIntention = require("./PaymentIntent");
 const OrderMutation = require("./Order");
+const OrderSubscription = require("./Order")
 const VideoMutation  = require("./VideoToken") 
 
 const Mutation = {
@@ -22,6 +23,9 @@ const Mutation = {
     ...OrderMutation.Mutation,
     ...VideoMutation.Mutation
   },
+  Subscription: {
+    ...OrderSubscription.Subscription
+  }
 };
 
 module.exports = Mutation;

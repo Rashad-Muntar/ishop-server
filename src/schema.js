@@ -49,7 +49,6 @@ const typeDefs = gql`
    order: newOrderPayload
    success: String
    message: String
-
   }
 
   input ShopperInput {
@@ -219,6 +218,11 @@ const typeDefs = gql`
     message: String
   }
 
+
+  # /////////////////////////////////////////////////////
+  #//////////////////////MUTATIONS////////////////////////////////////
+  #//////////////////////////////////////////////////////////
+
   type Mutation {
     phoneVerification(phoneNumber: String!): Message!
     codeVerification(phoneNumber: String!, code: Int!): Client!
@@ -322,15 +326,23 @@ const typeDefs = gql`
     ): Order!
     updateOrder(
       id: ID!
-      isCancel: Boolean!
-      isComplete: Boolean!
-      onGoing: Boolean!
+      isCancel: Boolean
+      isComplete: Boolean
+      onGoing: Boolean
       shopperId: String
     ): Order!
     deleteOrder(
       id: ID!
     ): Message!
     getVideoToken(userName: String!): String!
+  }
+
+  # /////////////////////////////////////////////////////.////////////
+  #//////////////////////SUBSCRIPTIONS////////////////////////////////////
+  #//////////////////////////////////////////////////////////////////
+
+  type Subscription {
+    onUpdateOrder(shopperId: String!): Order
   }
 `;
 
