@@ -31,20 +31,25 @@ const typeDefs = gql`
     title: String!
   }
 
-  type Order {
+  type newOrderPayload {
     id: ID!
-    startTime: DateTime!
-    endTime: DateTime!
-    code: Int
-    isCancel: Boolean!
-    isComplete: Boolean!
-    onGoing: Boolean!
+    code: Int!
+    isCancel: Boolean
+    isComplete: Boolean
+    onGoing: Boolean
     shopperId: String
     storeId: String!
     clientId: String!
-    products: [Product!]
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    products: [Product]
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  type Order {
+   order: newOrderPayload
+   success: String
+   message: String
+
   }
 
   input ShopperInput {
@@ -112,6 +117,7 @@ const typeDefs = gql`
     brand: String!
     price: Float!
     image: String
+    orders: [Order]
     createdAt: DateTime!
     updatedAt: DateTime!
   }
@@ -202,6 +208,8 @@ const typeDefs = gql`
     latitude: Float
     longitude: Float
     phone: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type newShopper {
@@ -307,6 +315,26 @@ const typeDefs = gql`
       image: String!
     ): Product!
     deleteProduct(id: ID!): Message!
+
+    createOrder(
+      storeId: String!
+      clientId: String!
+      # isCancel: Boolean
+      # isComplete: Boolean
+      # onGoing: Boolean
+    ): Order!
+    # updateOrder(
+    #   id: ID!
+    #   isCancel: Boolean!
+    #   isComplete: Boolean!
+    #   onGoing: Boolean!
+    #   shopperId: String
+    #   storeId: String!
+    #   clientId: String!
+    # ): Order!
+    # deleteOrder(
+    #   id: ID!
+    # ): Message!
   }
 `;
 
