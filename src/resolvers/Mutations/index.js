@@ -7,6 +7,7 @@ const Category = require("./Category");
 const ProductCategory = require("./ProductCategory");
 const PaymentIntention = require("./PaymentIntent");
 const OrderMutation = require("./Order");
+const VideoMutation  = require("./VideoToken") 
 
 const Mutation = {
   Mutation: {
@@ -19,6 +20,7 @@ const Mutation = {
     ...ProductCategory.Mutation,
     ...PaymentIntention.Mutation,
     ...OrderMutation.Mutation,
+    ...VideoMutation.Mutation
   },
 };
 

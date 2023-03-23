@@ -319,22 +319,18 @@ const typeDefs = gql`
     createOrder(
       storeId: String!
       clientId: String!
-      # isCancel: Boolean
-      # isComplete: Boolean
-      # onGoing: Boolean
     ): Order!
-    # updateOrder(
-    #   id: ID!
-    #   isCancel: Boolean!
-    #   isComplete: Boolean!
-    #   onGoing: Boolean!
-    #   shopperId: String
-    #   storeId: String!
-    #   clientId: String!
-    # ): Order!
-    # deleteOrder(
-    #   id: ID!
-    # ): Message!
+    updateOrder(
+      id: ID!
+      isCancel: Boolean!
+      isComplete: Boolean!
+      onGoing: Boolean!
+      shopperId: String
+    ): Order!
+    deleteOrder(
+      id: ID!
+    ): Message!
+    getVideoToken(userName: String!): String!
   }
 `;
 
